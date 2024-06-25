@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 import com.betplay.Controller;
 
+
 import Model.Entity.Doctor;
+
 
 
 
@@ -16,6 +18,7 @@ public class ViewDoctor {
 
         while (true) {
             System.out.println("------------------------");
+            System.out.println(" DOCTORES\n");
             System.out.println("1. Añadir Doctor");
             System.out.println("2. Actualizar Doctor");
             System.out.println("3. Buscar Doctor");
@@ -30,16 +33,16 @@ public class ViewDoctor {
             switch (choice) {
                 case 1:
                 Doctor doctor = new Doctor();
-                System.out.println("Ingrese el id del doctor:");
+                System.out.println("Ingrese el id del doctor:\n");
                 String codigoDoctor = scanner.nextLine();
-                System.out.println("Ingrese Nombre del doctor:");
+                System.out.println("Ingrese Nombre del doctor:\n");
                 doctor.setNombre(scanner.nextLine());
-                System.out.println("Ingrese la edad del doctor:");
+                System.out.println("Ingrese la edad del doctor:\n");
                 doctor.setEdad(scanner.nextInt());
                 scanner.nextLine(); // Consumir nueva línea después de nextInt()
-                System.out.println("Ingrese el titulo:");
+                System.out.println("Ingrese el titulo:\n");
                 doctor.setTitulo(scanner.nextLine());
-                System.out.println("Ingrese los años de experiencia:");
+                System.out.println("Ingrese los años de experiencia:\n");
                 doctor.setExpYear(scanner.nextInt());
                 scanner.nextLine(); // Consumir nueva línea después de nextInt()
             
@@ -52,7 +55,24 @@ public class ViewDoctor {
             
 
                 case 2:
-                    // Implementar actualización de equipo
+                    System.out.println("Ingrese el codigo del doctor a actualizar");
+                    String codigoActualizar = scanner.nextLine();
+                    Doctor doctorActualizar = controlador.doctores.get(codigoActualizar);
+                    if (doctorActualizar != null) {
+                        System.out.println("Ingrese el nuevo nombre del doctor (actual:" + doctorActualizar.getNombre() + "):");
+                        doctorActualizar.setNombre(scanner.nextLine());
+                        System.out.println("Ingrese la nueva edad del doctor (actual: "+ doctorActualizar.getEdad() + "):");
+                        doctorActualizar.setEdad(scanner.nextInt());
+                        scanner.nextLine();
+                        System.out.println("Ingrese el nuevo titulo del doctor (actual: "+ doctorActualizar.getTitulo() + "):");
+                        doctorActualizar.setTitulo(scanner.nextLine());
+                        scanner.nextLine();
+                        System.out.println("Ingrese los nuevos años de experiencia del doctor (actual: "+ doctorActualizar.getExpYear() + "):");
+                        doctorActualizar.setExpYear(scanner.nextInt());
+                        controlador.doctores.put(codigoActualizar, doctorActualizar);
+                    } else {
+                        System.out.println("Doctor no encontrado.");
+                    }
                     break;
 
                 case 3:
@@ -70,11 +90,22 @@ public class ViewDoctor {
                     break;
 
                 case 4:
-                    // Implementar eliminación de equipo
+                System.out.println("Ingrese el codigo del doctor a eliminar:");
+                String codigoEliminar = scanner.nextLine();
+                if (controlador.doctores.containsKey(codigoEliminar)) {
+                    controlador.doctores.remove(codigoEliminar);
+                    System.out.println("Doctor eliminado exitosamente.");
+                } else {
+                    System.out.println("Doctor no encontrado.");
+                }
                     break;
 
                 case 5:
-                    // Implementar listado de todos los equipos
+                    System.out.println("Lista de todos los doctores:");
+                for (String key : controlador.doctores.keySet()) {
+                    Doctor Doctor = controlador.doctores.get(key);
+                    System.out.println("Codigo: " + key + ", Nombre: " + Doctor.getNombre() + ", Edad: " + Doctor.getEdad() + ", Titulo: " + Doctor.getTitulo() + ", Experiencia: " + Doctor.getExpYear());
+                }
                     break;
 
                 case 6:

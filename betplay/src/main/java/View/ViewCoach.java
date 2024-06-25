@@ -6,6 +6,7 @@ import com.betplay.Controller;
 
 import Model.Entity.Coach;
 
+
 public class ViewCoach {
     public static Controller controlador;
 
@@ -14,6 +15,7 @@ public class ViewCoach {
 
         while (true) {
             System.out.println("------------------------");
+            System.out.println(" ENTRENADORES\n");
             System.out.println("1. Añadir Coach");
             System.out.println("2. Actualizar Coach");
             System.out.println("3. Buscar Coach");
@@ -28,13 +30,13 @@ public class ViewCoach {
             switch (choice) {
                 case 1:
                     Coach entrenadores = new Coach();
-                    System.out.println("Ingrese el codigo del coach:");
+                    System.out.println("Ingrese el codigo del coach:\n");
                     String codigoCoach = scanner.nextLine();
-                    System.out.println("Ingrese Nombre del coach:");
+                    System.out.println("Ingrese Nombre del coach:\n");
                     entrenadores.setNombre(scanner.nextLine());
-                    System.out.println("Ingrese la edad:");
+                    System.out.println("Ingrese la edad:\n");
                     entrenadores.setEdad(scanner.nextInt());
-                    System.out.println("Ingrese el id de la federacion:");
+                    System.out.println("Ingrese el id de la federacion:\n");
                     entrenadores.setIdFederacion(scanner.nextInt());
                     if (controlador != null) {
                         controlador.entrenadores.put(codigoCoach, entrenadores);
@@ -44,7 +46,22 @@ public class ViewCoach {
                     break;
 
                 case 2:
-                    // Implementar actualización de equipo
+                    System.out.println("Ingrese el codigo del coach a actualizar");
+                    String codigoActualizar = scanner.nextLine();
+                    Coach coachActualizar = controlador.entrenadores.get(codigoActualizar);
+                    if (coachActualizar != null) {
+                        System.out.println("Ingrese el nuevo nombre del coach (actual:" + coachActualizar.getNombre() + "):");
+                        coachActualizar.setNombre(scanner.nextLine());
+                        System.out.println("Ingrese la nueva edad del coach (actual: "+ coachActualizar.getEdad() + "):");
+                        coachActualizar.setEdad(scanner.nextInt());
+                        scanner.nextLine();
+                        System.out.println("Ingrese la nueva federacion del coach (actual: "+ coachActualizar.getIdFederacion() + "):");
+                        coachActualizar.setIdFederacion(scanner.nextInt());
+                        scanner.nextLine();
+                        controlador.entrenadores.put(codigoActualizar, coachActualizar);
+                    } else {
+                        System.out.println("Jugador no encontrado.");
+                    }
                     break;
 
                 case 3:
@@ -61,11 +78,22 @@ public class ViewCoach {
                     break;
 
                 case 4:
-                    // Implementar eliminación de equipo
+                System.out.println("Ingrese el codigo del coach a eliminar:");
+                String codigoEliminar = scanner.nextLine();
+                if (controlador.entrenadores.containsKey(codigoEliminar)) {
+                    controlador.entrenadores.remove(codigoEliminar);
+                    System.out.println("Coach eliminado exitosamente.");
+                } else {
+                    System.out.println("Coach no encontrado.");
+                }
                     break;
 
                 case 5:
-                    // Implementar listado de todos los equipos
+                System.out.println("Lista de todos los coachs:");
+                for (String key : controlador.entrenadores.keySet()) {
+                    Coach coach = controlador.entrenadores.get(key);
+                    System.out.println("Codigo: " + key + ", Nombre: " + coach.getNombre() + ", Edad: " + coach.getEdad() + ", Federacion: " + coach.getIdFederacion());
+                }
                     break;
 
                 case 6:
